@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { MagneticButton } from "@/components/magnetic-button";
-import { Menu, X, LogIn, PaintBucket, Hexagon } from "lucide-react";
+import { Menu, X, LogIn, PaintBucket, Blocks } from "lucide-react"; // Changed to Blocks
 import { WhiteLabelModal } from "@/components/white-label-modal";
 import { cn } from "@/lib/utils";
 
@@ -68,8 +68,9 @@ export function Header() {
         <div className="container mx-auto px-6">
           <div className="flex items-center justify-between">
             <Link href="/" className="group flex items-center gap-2">
-              <div className="relative flex items-center justify-center w-10 h-10 rounded-xl bg-gradient-to-br from-accent to-orange-500 text-white shadow-lg group-hover:scale-110 transition-transform">
-                <Hexagon className="w-6 h-6 fill-current" />
+              {/* NEW LOGO: Blocks Icon */}
+              <div className="relative flex items-center justify-center w-10 h-10 rounded-xl bg-gradient-to-br from-accent to-orange-600 text-white shadow-lg group-hover:scale-110 transition-transform">
+                <Blocks className="w-6 h-6" />
               </div>
               <div className="flex flex-col">
                 <span className="text-xl font-black text-foreground tracking-tighter leading-none group-hover:text-accent transition-colors">

@@ -8,9 +8,12 @@ const _geist = Geist({ subsets: ["latin"] });
 const _geistMono = Geist_Mono({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Creme Digital | The #1 AI Product Studio for Founders",
+  title: "Nexus AI | Build $3M+ AI Assets in 14 Days",
   description:
     "The partner for founders building products with AI. Design, build, and launch products that scale — fast. Trusted by 200+ startups.",
+  icons: {
+    icon: "/icon1.svg",
+  },
 };
 
 export default function RootLayout({

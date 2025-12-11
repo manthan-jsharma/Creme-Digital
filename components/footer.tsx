@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { RevealOnScroll } from "@/components/reveal-on-scroll";
 import { MagneticButton } from "@/components/magnetic-button";
-import { ArrowUpRight, Mail, Twitter, Linkedin } from "lucide-react";
+import { ArrowUpRight, Mail, Twitter, Linkedin, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 
@@ -11,7 +11,11 @@ const footerLinks = {
   company: [
     { label: "Work", href: "#work" },
     { label: "Whitelabel", href: "#" },
-    { label: "Contact", href: "#" },
+    {
+      label: "Contact",
+      href: "https://cal.com/aiapps.dev/30min",
+      external: true,
+    },
   ],
   resources: [
     { label: "Pricing", href: "#pricing" },
@@ -28,6 +32,20 @@ const socialLinks = [
 
 export function Footer() {
   const [email, setEmail] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleSignUp = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!email) return;
+
+    setIsLoading(true);
+
+    // Redirect to Booking URL
+    // Using window.location.href for a full page redirect
+    setTimeout(() => {
+      window.location.href = "https://cal.com/aiapps.dev/30min";
+    }, 500);
+  };
 
   return (
     <footer className="relative bg-card border-t border-border/50 overflow-hidden">
@@ -46,9 +64,9 @@ export function Footer() {
                 className="group inline-flex items-center gap-2 mb-6"
               >
                 <span className="text-3xl font-black text-foreground transition-colors group-hover:text-accent">
-                  Creme
+                  Nexus
                 </span>
-                <span className="text-sm text-muted-foreground">Digital</span>
+                <span className="text-sm text-muted-foreground">AI Assets</span>
               </Link>
 
               <p className="text-muted-foreground mb-8 max-w-md leading-relaxed">
@@ -56,25 +74,34 @@ export function Footer() {
                 build, and launch products that scale — fast.
               </p>
 
-              {/* Newsletter signup */}
+              {/* Newsletter signup with Redirect */}
               <div className="mb-8">
                 <p className="text-sm text-muted-foreground mb-3">
                   Subscribe to stay updated.
                 </p>
-                <div className="flex gap-2">
+                <form onSubmit={handleSignUp} className="flex gap-2">
                   <input
                     type="email"
                     placeholder="Enter your email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
+                    required
                     className="flex-1 px-4 py-3 rounded-xl bg-background border border-border/50 text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-accent/50 transition-colors"
                   />
                   <MagneticButton strength={15}>
-                    <Button className="rounded-xl bg-gradient-to-r from-accent to-orange-500 px-6 font-semibold">
-                      Sign Up
+                    <Button
+                      type="submit"
+                      disabled={isLoading}
+                      className="rounded-xl bg-gradient-to-r from-accent to-orange-500 px-6 font-semibold"
+                    >
+                      {isLoading ? (
+                        <Loader2 className="w-4 h-4 animate-spin" />
+                      ) : (
+                        "Sign Up"
+                      )}
                     </Button>
                   </MagneticButton>
-                </div>
+                </form>
               </div>
 
               {/* Social links */}
@@ -125,7 +152,7 @@ export function Footer() {
         <RevealOnScroll direction="up">
           <div className="pt-8 border-t border-border/30 flex flex-col md:flex-row justify-between items-center gap-4">
             <p className="text-sm text-muted-foreground">
-              © 2025 Creme Digital — All rights reserved
+              © 2025 NexusAI — All rights reserved
             </p>
             <div className="flex gap-6">
               <Link

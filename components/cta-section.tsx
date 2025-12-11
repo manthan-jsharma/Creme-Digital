@@ -76,7 +76,7 @@ export function CTASection() {
                     <Link
                       href={client.instagram}
                       target="_blank"
-                      className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-secondary/50 hover:bg-pink-600 hover:text-white transition-all text-xs font-medium border border-border/30"
+                      className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-secondary/50 hover:bg-orange-500 hover:text-white transition-all text-xs font-medium border border-border/30"
                     >
                       <Instagram className="w-3 h-3" />
                       <span>Instagram</span>
