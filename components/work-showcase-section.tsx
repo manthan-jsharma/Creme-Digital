@@ -32,8 +32,8 @@ function InteractiveVideo() {
 
           {/* Financial Value Badge */}
           <div className="absolute top-6 right-6 z-20">
-            <div className="px-4 py-2 rounded-full bg-emerald-500/20 backdrop-blur-md border border-emerald-500/30 text-emerald-400 text-xs font-bold uppercase tracking-wider flex items-center gap-2 shadow-lg">
-              <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+            <div className="px-4 py-2 rounded-full bg-zinc-500/20 backdrop-blur-md border border-zinc-500/30 text-orange-400 text-xs font-bold uppercase tracking-wider flex items-center gap-2 shadow-lg">
+              <div className="w-2 h-2 rounded-full bg-zinc-500 animate-pulse" />
               Generating Revenue
             </div>
           </div>
