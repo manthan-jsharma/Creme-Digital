@@ -11,8 +11,8 @@ const navItems = [
   { href: "#work", label: "Work" },
   { href: "#pricing", label: "Pricing" },
   { href: "#white-label", label: "White Label" },
-  { href: "#testimonials", label: "Testimonials" },
   { href: "#faq", label: "FAQs" },
+  { href: "#testimonials", label: "Testimonials" },
 ];
 export function Header() {
   const [isScrolled, setIsScrolled] = useState(false);

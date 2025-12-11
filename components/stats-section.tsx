@@ -8,11 +8,18 @@ import { AnimatedGradientText } from "@/components/animated-gradient";
 import { SplitText } from "@/components/split-text";
 import { GradientBlob } from "@/components/gradient-blob";
 import { Card3D } from "@/components/3d-card";
-// FIX: Added FloatingElement import
 import { FloatingElement } from "@/components/floating-elements";
 import { useRef, useState, useEffect } from "react";
-import { CheckCircle, Crown, ArrowRight, LayoutDashboard } from "lucide-react";
+import {
+  CheckCircle,
+  Crown,
+  ArrowRight,
+  LayoutDashboard,
+  Settings2,
+  MousePointerClick,
+} from "lucide-react";
 import { cn } from "@/lib/utils";
+import { WhiteLabelModal } from "@/components/white-label-modal";
 import {
   Carousel,
   CarouselContent,
@@ -57,7 +64,6 @@ const logos = [
   "Fund2Grow",
 ];
 
-// Dashboard Screenshots
 const dashboardScreenshots = [
   {
     src: "/AI-Saas-Dashboard1.png",
@@ -72,7 +78,7 @@ const dashboardScreenshots = [
   {
     src: "/AI-Saas-Dashboard3.png",
     title: "Revenue Engine",
-    desc: "AIintegration & MRR forecasting",
+    desc: "Stripe integration & MRR forecasting",
   },
 ];
 
@@ -137,6 +143,7 @@ function InfiniteLogoMarquee() {
 function DashboardShowcase() {
   const [api, setApi] = useState<CarouselApi>();
   const [current, setCurrent] = useState(0);
+  const [isWhiteLabelOpen, setIsWhiteLabelOpen] = useState(false);
 
   useEffect(() => {
     if (!api) return;
@@ -148,24 +155,39 @@ function DashboardShowcase() {
 
   return (
     <div className="relative w-full">
-      {/* Floating "White Label" Card */}
+      {/* Floating "White Label" Card - NOW INTERACTIVE */}
       <div className="absolute -top-12 right-4 md:-right-12 z-20 hidden md:block">
         <FloatingElement delay={500} amplitude={10} frequency={1.5}>
-          <div className="bg-card border border-accent/30 p-5 rounded-2xl shadow-2xl max-w-xs backdrop-blur-xl">
-            <div className="flex items-center gap-3 mb-3">
-              <div className="p-2 bg-accent/10 rounded-lg">
-                <Crown className="w-5 h-5 text-accent" />
+          <div
+            onClick={() => setIsWhiteLabelOpen(true)}
+            className="bg-card border border-accent/30 p-5 rounded-2xl shadow-2xl max-w-xs backdrop-blur-xl cursor-pointer hover:scale-105 hover:border-accent transition-all duration-300 group"
+          >
+            <div className="flex items-center justify-between mb-3">
+              <div className="flex items-center gap-3">
+                <div className="p-2 bg-accent/10 rounded-lg group-hover:bg-accent/20 transition-colors">
+                  <Crown className="w-5 h-5 text-accent" />
+                </div>
+                <h4 className="font-bold text-foreground text-sm group-hover:text-accent transition-colors">
+                  Resell As Your Own
+                </h4>
               </div>
-              <h4 className="font-bold text-foreground text-sm">
-                Resell As Your Own
-              </h4>
+              <Settings2 className="w-4 h-4 text-muted-foreground group-hover:text-accent transition-colors opacity-0 group-hover:opacity-100" />
             </div>
-            <p className="text-xs text-muted-foreground leading-relaxed mb-3">
-              Launch your own agency. We build the tech, you white-label it and
-              charge clients $5k-$10k monthly.
+
+            <p className="text-xs text-muted-foreground leading-relaxed mb-3 group-hover:text-foreground/80 transition-colors">
+              Launch your own agency. We build the tech, you white-label it.{" "}
+              <span className="text-foreground font-bold">
+                Reseller License: $10,000/year.
+              </span>
             </p>
-            <div className="flex items-center gap-2 text-xs font-bold text-accent">
-              <CheckCircle className="w-3 h-3" /> 100% IP Ownership
+
+            <div className="flex items-center justify-between text-xs font-bold text-accent pt-2 border-t border-border/30">
+              <div className="flex items-center gap-2">
+                <CheckCircle className="w-3 h-3" /> 100% IP Ownership
+              </div>
+              <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity text-[10px] uppercase tracking-wide">
+                <MousePointerClick className="w-3 h-3" /> Try Demo
+              </div>
             </div>
           </div>
         </FloatingElement>
@@ -182,7 +204,7 @@ function DashboardShowcase() {
             </div>
             <div className="ml-4 px-3 py-1 rounded-md bg-secondary/50 text-[10px] font-mono text-muted-foreground flex items-center gap-2">
               <LayoutDashboard className="w-3 h-3" />
-              app.Nebula-saas.com/dashboard
+              app.NebulaAI-saas.com/dashboard
             </div>
           </div>
 
@@ -236,6 +258,12 @@ function DashboardShowcase() {
           />
         ))}
       </div>
+
+      {/* Modal Component */}
+      <WhiteLabelModal
+        isOpen={isWhiteLabelOpen}
+        onClose={() => setIsWhiteLabelOpen(false)}
+      />
     </div>
   );
 }
@@ -298,19 +326,21 @@ export function StatsSection() {
         </div>
 
         {/* DASHBOARD CAROUSEL + WHITE LABEL PITCH */}
-        <RevealOnScroll delay={500} direction="scale">
-          <div id="white-label" className="max-w-5xl mx-auto mb-24">
-            <div className="text-center mb-12">
-              <h3 className="text-2xl md:text-3xl font-black mb-3">
-                Your Future Command Center
-              </h3>
-              <p className="text-muted-foreground">
-                Get your own branded dashboard to manage your empire.
-              </p>
+        <div id="white-label" className="scroll-mt-32">
+          <RevealOnScroll delay={500} direction="scale">
+            <div className="max-w-5xl mx-auto mb-24">
+              <div className="text-center mb-12">
+                <h3 className="text-2xl md:text-3xl font-black mb-3">
+                  Your Future Command Center
+                </h3>
+                <p className="text-muted-foreground">
+                  Get your own branded dashboard to manage your empire.
+                </p>
+              </div>
+              <DashboardShowcase />
             </div>
-            <DashboardShowcase />
-          </div>
-        </RevealOnScroll>
+          </RevealOnScroll>
+        </div>
 
         {/* Logo marquee */}
         <RevealOnScroll delay={700} direction="fade">
