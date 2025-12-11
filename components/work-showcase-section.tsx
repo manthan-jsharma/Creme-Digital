@@ -2,15 +2,13 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { ArrowUpRight, Play, ExternalLink } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { ArrowUpRight, Play, ExternalLink, Instagram } from "lucide-react";
 import { RevealOnScroll } from "@/components/reveal-on-scroll";
 import { MagneticButton } from "@/components/magnetic-button";
 import { Card3D } from "@/components/3d-card";
-import { AnimatedGradientText } from "@/components/animated-gradient";
 import { SplitText } from "@/components/split-text";
 import { cn } from "@/lib/utils";
-import { projects } from "@/lib/data";
+import { projects, clientProofs } from "@/lib/data"; // Imported clientProofs
 
 // Custom Video Component
 function InteractiveVideo() {
@@ -25,12 +23,20 @@ function InteractiveVideo() {
         >
           <div className="absolute inset-0 bg-gradient-to-br from-gray-900 to-black" />
           <img
-            src="/professional-business-person-presenting-ai-softwar.jpg"
-            alt="Demo Preview"
+            src="/loomvideo.png"
+            alt="Behind the Scenes"
             className="w-full h-full object-cover opacity-60 group-hover:opacity-40 transition-opacity duration-500"
           />
 
           <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.05)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.05)_1px,transparent_1px)] bg-[size:40px_40px]" />
+
+          {/* Financial Value Badge */}
+          <div className="absolute top-6 right-6 z-20">
+            <div className="px-4 py-2 rounded-full bg-emerald-500/20 backdrop-blur-md border border-emerald-500/30 text-emerald-400 text-xs font-bold uppercase tracking-wider flex items-center gap-2 shadow-lg">
+              <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+              Generating Revenue
+            </div>
+          </div>
 
           <div className="absolute inset-0 flex items-center justify-center z-20">
             <MagneticButton strength={50}>
@@ -48,10 +54,10 @@ function InteractiveVideo() {
 
           <div className="absolute bottom-6 left-6 z-20">
             <p className="text-sm font-bold text-white uppercase tracking-widest mb-1">
-              Live Demo
+              2 Minutes Behind the Scenes
             </p>
             <p className="text-2xl font-black text-white">
-              Watch us build in real-time
+              How we build Assets, not just UI
             </p>
           </div>
         </div>
@@ -88,10 +94,6 @@ function ProjectCard({
 
   return (
     <Card3D intensity={15} glareEnabled>
-      {/* LINK CHANGE: 
-         The main card links to the INTERNAL project page (/work/[id])
-         The small button inside links to the EXTERNAL live site.
-      */}
       <Link href={`/work/${project.id}`} className="block h-full">
         <div
           className="group relative h-full rounded-3xl bg-card border border-border/50 overflow-hidden transition-all duration-500 hover:border-accent/50 hover:shadow-[0_0_30px_-10px_rgba(var(--accent-rgb),0.3)]"
@@ -187,11 +189,12 @@ export function WorkShowcaseSection() {
             <div className="inline-block px-4 py-2 rounded-full border border-border/50 text-sm text-muted-foreground mb-6 backdrop-blur-sm bg-card/50">
               PROOF OF COMPETENCE
             </div>
-            <h2 className="text-4xl md:text-6xl lg:text-7xl font-black tracking-tighter mb-8">
-              <SplitText text="Watch us build & ship" className="block" />
+            {/* UPDATED HEADLINE to Match "Financial Value" Strategy */}
+            <h2 className="text-4xl md:text-6xl lg:text-7xl font-black tracking-tighter mb-8 leading-tight">
+              <SplitText text="Watch us build, ship," className="block" />
               <span className="text-accent">
                 <SplitText
-                  text="in real-time."
+                  text="and acquire users in real-time."
                   animation="elastic"
                   delay={300}
                 />
@@ -200,6 +203,47 @@ export function WorkShowcaseSection() {
 
             <div className="max-w-4xl mx-auto">
               <InteractiveVideo />
+            </div>
+
+            {/* ADDED PROOF BLOCK: Prove it immediately below video */}
+            <div className="mt-12 max-w-4xl mx-auto border-t border-border/30 pt-8">
+              <p className="text-xs font-bold text-muted-foreground uppercase tracking-widest mb-6">
+                Verified Founders we've built assets for
+              </p>
+              <div className="flex flex-wrap justify-center gap-4 md:gap-12">
+                {clientProofs.map((client, i) => (
+                  <div
+                    key={i}
+                    className="flex items-center gap-3 text-left group cursor-pointer hover:bg-card/50 p-2 rounded-lg transition-colors"
+                  >
+                    <div className="w-10 h-10 rounded-full bg-gradient-to-br from-gray-800 to-black flex items-center justify-center text-sm font-bold border border-border/50">
+                      {client.name.charAt(0)}
+                    </div>
+                    <div>
+                      <div className="text-sm font-bold text-foreground">
+                        {client.name}
+                      </div>
+                      <div className="text-[10px] text-muted-foreground flex gap-2">
+                        <Link
+                          href={client.instagram}
+                          target="_blank"
+                          className="hover:text-accent"
+                        >
+                          Instagram
+                        </Link>
+                        <span>•</span>
+                        <Link
+                          href={client.productLink}
+                          target="_blank"
+                          className="hover:text-accent"
+                        >
+                          Product
+                        </Link>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </RevealOnScroll>

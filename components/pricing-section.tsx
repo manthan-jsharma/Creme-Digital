@@ -133,7 +133,7 @@ export function PricingSection() {
         </div>
 
         {/* Bonus Section */}
-        <RevealOnScroll delay={400} direction="up">
+        {/* <RevealOnScroll delay={400} direction="up">
           <div className="mt-24 max-w-4xl mx-auto p-1 rounded-3xl bg-gradient-to-r from-accent/20 via-orange-500/20 to-accent/20">
             <div className="bg-background rounded-[22px] p-8 md:p-12 text-center">
               <h3 className="text-3xl font-black mb-6">⚡ Efficiency Reward</h3>
@@ -161,7 +161,7 @@ export function PricingSection() {
               </div>
             </div>
           </div>
-        </RevealOnScroll>
+        </RevealOnScroll> */}
       </div>
     </section>
   );
