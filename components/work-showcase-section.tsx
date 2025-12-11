@@ -2,14 +2,80 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { ArrowUpRight, ExternalLink, Layers, Zap } from "lucide-react";
+import { ArrowUpRight, Play, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { RevealOnScroll } from "@/components/reveal-on-scroll";
 import { MagneticButton } from "@/components/magnetic-button";
 import { Card3D } from "@/components/3d-card";
+import { AnimatedGradientText } from "@/components/animated-gradient";
 import { SplitText } from "@/components/split-text";
 import { cn } from "@/lib/utils";
 import { projects } from "@/lib/data";
+
+// Custom Video Component
+function InteractiveVideo() {
+  const [isPlaying, setIsPlaying] = useState(false);
+
+  return (
+    <div className="relative rounded-2xl overflow-hidden border border-border/50 shadow-2xl bg-card group">
+      {!isPlaying ? (
+        <div
+          className="relative aspect-video cursor-pointer"
+          onClick={() => setIsPlaying(true)}
+        >
+          <div className="absolute inset-0 bg-gradient-to-br from-gray-900 to-black" />
+          <img
+            src="/professional-business-person-presenting-ai-softwar.jpg"
+            alt="Demo Preview"
+            className="w-full h-full object-cover opacity-60 group-hover:opacity-40 transition-opacity duration-500"
+          />
+
+          <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.05)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.05)_1px,transparent_1px)] bg-[size:40px_40px]" />
+
+          <div className="absolute inset-0 flex items-center justify-center z-20">
+            <MagneticButton strength={50}>
+              <div className="relative group/btn">
+                <div className="absolute inset-0 rounded-full border border-accent/40 animate-[ping_2s_ease-in-out_infinite]" />
+                <div className="absolute inset-0 rounded-full border border-accent/20 animate-[pulse_2s_ease-in-out_infinite] scale-125" />
+
+                <button className="relative w-24 h-24 rounded-full bg-gradient-to-br from-accent via-orange-500 to-amber-500 flex items-center justify-center shadow-[0_0_40px_-5px_rgba(249,115,22,0.5)] transition-transform duration-300 group-hover/btn:scale-110">
+                  <Play className="w-10 h-10 text-white ml-1 fill-current" />
+                  <div className="absolute inset-0 rounded-full bg-gradient-to-r from-transparent via-white/40 to-transparent -translate-x-full group-hover/btn:translate-x-full transition-transform duration-700 ease-in-out" />
+                </button>
+              </div>
+            </MagneticButton>
+          </div>
+
+          <div className="absolute bottom-6 left-6 z-20">
+            <p className="text-sm font-bold text-white uppercase tracking-widest mb-1">
+              Live Demo
+            </p>
+            <p className="text-2xl font-black text-white">
+              Watch us build in real-time
+            </p>
+          </div>
+        </div>
+      ) : (
+        <div
+          style={{ position: "relative", paddingBottom: "62.5%", height: 0 }}
+        >
+          <iframe
+            src="https://www.loom.com/embed/7dcd9028f4be42028af06033e2d95f37?sid=9b602677-4402-4299-8802-998844890209&autoplay=1"
+            frameBorder="0"
+            allowFullScreen
+            style={{
+              position: "absolute",
+              top: 0,
+              left: 0,
+              width: "100%",
+              height: "100%",
+            }}
+          />
+        </div>
+      )}
+    </div>
+  );
+}
 
 function ProjectCard({
   project,
@@ -21,234 +87,141 @@ function ProjectCard({
   const [isHovered, setIsHovered] = useState(false);
 
   return (
-    <Link href={`/work/${project.id}`}>
-      <Card3D intensity={10} glareEnabled>
+    <Card3D intensity={15} glareEnabled>
+      {/* LINK CHANGE: 
+         The main card links to the INTERNAL project page (/work/[id])
+         The small button inside links to the EXTERNAL live site.
+      */}
+      <Link href={`/work/${project.id}`} className="block h-full">
         <div
-          className="group relative h-full cursor-pointer"
+          className="group relative h-full rounded-3xl bg-card border border-border/50 overflow-hidden transition-all duration-500 hover:border-accent/50 hover:shadow-[0_0_30px_-10px_rgba(var(--accent-rgb),0.3)]"
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
         >
-          <div
-            className={cn(
-              "relative h-full rounded-3xl bg-gradient-to-br from-card via-card to-background border border-border/30 overflow-hidden transition-all duration-700",
-              isHovered && "border-accent/40"
-            )}
-          >
-            {/* Animated border */}
+          <div className="relative aspect-video overflow-hidden">
             <div
-              className="absolute inset-0 rounded-3xl p-px transition-opacity duration-500"
-              style={{
-                background: `linear-gradient(135deg, ${project.gradient
-                  .split(" ")[0]
-                  .replace("from-", "")}40, transparent, ${project.gradient
-                  .split(" ")[1]
-                  .replace("to-", "")}40)`,
-                opacity: isHovered ? 1 : 0,
-              }}
+              className={cn(
+                "absolute inset-0 bg-gradient-to-br opacity-30 transition-opacity duration-500 group-hover:opacity-40",
+                project.gradient
+              )}
+            />
+            <img
+              src={project.image}
+              alt={project.name}
+              className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110 opacity-70 group-hover:opacity-100"
             />
 
-            {/* Image container with advanced effects */}
-            <div className="relative aspect-[16/10] overflow-hidden">
-              <img
-                src={project.image || "/placeholder.svg"}
-                alt={project.name}
-                className={cn(
-                  "w-full h-full object-cover transition-all duration-1000",
-                  isHovered && "scale-110"
-                )}
-                style={{
-                  filter: isHovered
-                    ? "brightness(1.1) saturate(1.2)"
-                    : "brightness(0.8) saturate(0.9)",
-                }}
-              />
+            <div className="absolute inset-0 bg-gradient-to-t from-card via-transparent to-transparent opacity-90" />
 
-              {/* Gradient overlays */}
-              <div className="absolute inset-0 bg-gradient-to-t from-card via-card/60 to-transparent" />
-              <div
-                className={cn(
-                  "absolute inset-0 transition-opacity duration-500",
-                  `bg-gradient-to-br ${project.gradient}`
-                )}
-                style={{
-                  opacity: isHovered ? 0.2 : 0,
-                  mixBlendMode: "overlay",
-                }}
-              />
+            <div className="absolute top-4 right-4 translate-y-[-10px] opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">
+              <div className="px-3 py-1 rounded-full bg-black/50 backdrop-blur-md text-xs font-bold border border-white/10 text-white">
+                {project.stats.status || "Live"}
+              </div>
+            </div>
+          </div>
 
-              {/* Floating category badge */}
-              <div className="absolute top-4 left-4">
+          <div className="p-6 relative z-10 -mt-12">
+            <div className="flex justify-between items-end mb-4">
+              <div>
                 <div
                   className={cn(
-                    "px-4 py-1.5 rounded-full text-xs font-bold text-white bg-gradient-to-r backdrop-blur-md border border-white/10 transition-all duration-500",
-                    project.gradient,
-                    isHovered && "scale-105"
+                    "text-xs font-black uppercase tracking-wider mb-2 bg-clip-text text-transparent bg-gradient-to-r",
+                    project.gradient
                   )}
                 >
                   {project.category}
                 </div>
-              </div>
-
-              {/* Year badge */}
-              <div className="absolute top-4 right-4">
-                <div className="px-3 py-1 rounded-full text-xs font-mono text-muted-foreground bg-background/80 backdrop-blur-md border border-border/50">
-                  {project.year}
-                </div>
-              </div>
-
-              {/* Hover CTA */}
-              <div
-                className={cn(
-                  "absolute inset-0 flex items-center justify-center transition-all duration-500",
-                  isHovered ? "opacity-100" : "opacity-0"
-                )}
-              >
-                <MagneticButton strength={25}>
-                  <div
-                    className={cn(
-                      "flex items-center gap-3 px-8 py-4 rounded-full bg-gradient-to-r text-white font-bold shadow-2xl transition-all duration-500",
-                      project.gradient,
-                      isHovered
-                        ? "scale-100 translate-y-0"
-                        : "scale-90 translate-y-4"
-                    )}
-                  >
-                    <span>View Project</span>
-                    <ExternalLink className="w-5 h-5" />
-                  </div>
-                </MagneticButton>
-              </div>
-            </div>
-
-            {/* Content */}
-            <div className="p-6 relative z-10">
-              <div className="flex items-center justify-between mb-4">
-                <h3
-                  className={cn(
-                    "text-2xl font-black text-foreground transition-colors duration-300",
-                    isHovered && "text-accent"
-                  )}
-                >
+                <h3 className="text-3xl font-black text-white leading-none mb-1 group-hover:text-accent transition-colors">
                   {project.name}
                 </h3>
-                <ArrowUpRight
-                  className={cn(
-                    "w-6 h-6 text-muted-foreground transition-all duration-500",
-                    isHovered &&
-                      "text-accent translate-x-1 -translate-y-1 rotate-45"
-                  )}
-                />
               </div>
 
-              <p className="text-sm text-muted-foreground leading-relaxed mb-4 line-clamp-2">
-                {project.description}
-              </p>
-
-              {/* Mini stats */}
-              <div
-                className={cn(
-                  "flex gap-4 pt-4 border-t border-border/30 transition-all duration-500",
-                  isHovered
-                    ? "opacity-100 translate-y-0"
-                    : "opacity-0 translate-y-2"
-                )}
-              >
-                {Object.entries(project.stats)
-                  .slice(0, 2)
-                  .map(([key, value]) => (
-                    <div key={key} className="text-center">
-                      <div className="text-sm font-bold text-accent">
-                        {value}
-                      </div>
-                      <div className="text-xs text-muted-foreground capitalize">
-                        {key}
-                      </div>
-                    </div>
-                  ))}
+              <div className="w-10 h-10 rounded-full bg-white/10 backdrop-blur-md flex items-center justify-center border border-white/20 group-hover:bg-accent group-hover:border-accent group-hover:text-black transition-all">
+                <ArrowUpRight className="w-5 h-5" />
               </div>
             </div>
+
+            <p className="text-muted-foreground text-sm mb-6 line-clamp-3 group-hover:text-foreground/80 transition-colors">
+              {project.fullDescription}
+            </p>
+
+            <div className="flex flex-wrap gap-2 mb-6">
+              {project.technologies.slice(0, 3).map((tech) => (
+                <span
+                  key={tech}
+                  className="px-2 py-1 rounded-md bg-secondary/50 text-[10px] font-mono text-muted-foreground border border-border/30"
+                >
+                  {tech}
+                </span>
+              ))}
+            </div>
+
+            {project.founder && (
+              <div className="pt-4 border-t border-border/30 flex items-center gap-3">
+                <div className="w-8 h-8 rounded-full bg-gradient-to-br from-gray-700 to-gray-900 flex items-center justify-center text-xs font-bold border border-border">
+                  {project.founder.charAt(0)}
+                </div>
+                <div>
+                  <span className="text-xs text-muted-foreground block">
+                    Built for
+                  </span>
+                  <span className="text-xs font-bold text-foreground">
+                    {project.founder}
+                  </span>
+                </div>
+              </div>
+            )}
           </div>
         </div>
-      </Card3D>
-    </Link>
+      </Link>
+    </Card3D>
   );
 }
 
 export function WorkShowcaseSection() {
-  const [showAll, setShowAll] = useState(false);
-  const displayedProjects = showAll ? projects : projects.slice(0, 6);
-
   return (
-    <section id="work" className="py-32 bg-background relative overflow-hidden">
-      {/* Background effects */}
-      <div className="absolute inset-0">
-        <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-accent/30 to-transparent" />
-        <div className="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-accent/30 to-transparent" />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] rounded-full bg-accent/5 blur-[150px]" />
-      </div>
-
+    <section id="work" className="py-24 bg-background relative overflow-hidden">
       <div className="container mx-auto px-6 relative z-10">
         <RevealOnScroll direction="down">
-          <div className="text-center mb-20">
-            <div className="inline-flex items-center gap-2 px-5 py-2 rounded-full border border-accent/30 bg-accent/5 text-sm text-accent mb-8 backdrop-blur-sm">
-              <Layers className="w-4 h-4" />
-              <span className="font-semibold tracking-wide">OUR WORK</span>
+          <div className="text-center mb-16">
+            <div className="inline-block px-4 py-2 rounded-full border border-border/50 text-sm text-muted-foreground mb-6 backdrop-blur-sm bg-card/50">
+              PROOF OF COMPETENCE
             </div>
-            <h2 className="text-4xl md:text-5xl lg:text-7xl font-black mb-6 tracking-tight">
-              <SplitText
-                text="SHOWCASING"
-                animation="fadeUp"
-                stagger={50}
-                className="block mb-2"
-              />
+            <h2 className="text-4xl md:text-6xl lg:text-7xl font-black tracking-tighter mb-8">
+              <SplitText text="Watch us build & ship" className="block" />
               <span className="text-accent">
                 <SplitText
-                  text="SUCCESS"
+                  text="in real-time."
                   animation="elastic"
-                  stagger={60}
                   delay={300}
                 />
               </span>
             </h2>
-            <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto">
-              Over 200+ products built across dozens of industries. Here are
-              some of our favorites.
-            </p>
+
+            <div className="max-w-4xl mx-auto">
+              <InteractiveVideo />
+            </div>
           </div>
         </RevealOnScroll>
 
+        <div className="text-center mb-12 mt-32">
+          <RevealOnScroll direction="up">
+            <h3 className="text-3xl md:text-5xl font-black mb-4">
+              The Wall of Results
+            </h3>
+            <p className="text-xl text-muted-foreground">
+              2 Founder Exits | 39 Software Builds
+            </p>
+          </RevealOnScroll>
+        </div>
+
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
-          {displayedProjects.map((project, index) => (
+          {projects.map((project, index) => (
             <RevealOnScroll key={project.id} delay={index * 100} direction="up">
               <ProjectCard project={project} index={index} />
             </RevealOnScroll>
           ))}
         </div>
-
-        {/* View all button */}
-        <RevealOnScroll delay={500} direction="up">
-          <div className="flex justify-center mt-16">
-            <MagneticButton strength={25}>
-              <Button
-                onClick={() => setShowAll(!showAll)}
-                className="group rounded-full border-2 border-border/50 bg-transparent px-10 py-7 text-lg font-bold text-foreground backdrop-blur-sm transition-all duration-500 hover:border-accent/50 hover:bg-accent/10"
-                variant="outline"
-              >
-                <span className="flex items-center gap-3">
-                  {showAll ? "Show Less" : "View All Work"}
-                  <Zap
-                    className={cn(
-                      "w-5 h-5 transition-all duration-500",
-                      showAll
-                        ? "rotate-180"
-                        : "group-hover:rotate-12 group-hover:text-accent"
-                    )}
-                  />
-                </span>
-              </Button>
-            </MagneticButton>
-          </div>
-        </RevealOnScroll>
       </div>
     </section>
   );

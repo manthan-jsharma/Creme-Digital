@@ -1,56 +1,38 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { ChevronDown } from "lucide-react"
-import { RevealOnScroll } from "@/components/reveal-on-scroll"
-import { AnimatedGradientText } from "@/components/animated-gradient"
-import { cn } from "@/lib/utils"
+import { useState } from "react";
+import { ChevronDown } from "lucide-react";
+import { RevealOnScroll } from "@/components/reveal-on-scroll";
+import { SplitText } from "@/components/split-text";
+import { cn } from "@/lib/utils";
 
 const faqs = [
   {
-    question: "What is Creme Digital?",
+    question: "Can you really ship a working AI CRM/SaaS in 14 days?",
     answer:
-      "An AI product studio that designs, builds, and launches apps using Lovable — the world's leading AI development platform.",
+      "Yes. We cut the bloat. We define the 'Pay-First' features that solve the immediate problem, and we execute with pre-built, proprietary modules. Speed is our primary metric.",
   },
   {
-    question: "How are you different from other agencies?",
+    question: "Do you take equity?",
     answer:
-      "We combine AI-accelerated development with senior-level product strategy, fast sprints, and flexible, async collaboration.",
+      "No. You keep 100%. We are a high-leverage build partner, not a VC. You own the code, the IP, and the revenue.",
   },
   {
-    question: "Who do you work with?",
-    answer: "Founders, early-stage startups, and teams that want to ship fast without hiring full-time engineers.",
-  },
-  {
-    question: "How many products have you built?",
-    answer: "Over 200+ products across dozens of industries.",
-  },
-  {
-    question: "What services do you offer?",
-    answer: "Design, product strategy, rapid sprints, AI app development, API integrations, and full MVP builds.",
-  },
-  {
-    question: "What is Lovable?",
-    answer: "A powerful AI development platform that enables automated, fast, scalable app building.",
-  },
-  {
-    question: "Can you validate my app idea?",
-    answer: "Yes — we help validate concepts through quick MVPs, prototypes, and sprint-based iterations.",
-  },
-  {
-    question: "How much does it cost to build an AI app?",
+    question: "Why is this better than the 'Fractional Team' model?",
     answer:
-      "It depends on complexity. Most founders use either our 2-week sprint ($4,500) or 2-week MVP package ($9,500).",
+      "Subscriptions incentivize agencies to move slowly to keep you paying monthly. We are incentivized by Speed of Completion. You get an asset, not a payroll liability.",
   },
   {
-    question: "How long does it take to build?",
-    answer: "2 weeks for a working MVP. Bi-weekly for ongoing sprints.",
+    question: "What about updates?",
+    answer:
+      "You get a prototype Day 1. You get a code update every day at EOD via Loom. You launch Day 14. Radical transparency, no black boxes.",
   },
   {
-    question: "Do you support after launch?",
-    answer: "Yes — you can continue sprints, pause anytime, or re-activate as needed.",
+    question: "Do you handle the designs?",
+    answer:
+      "We don't just 'handle' them. We prototype the core concept on Day 1 so you have a clickable model before the sun goes down.",
   },
-]
+];
 
 function FAQItem({
   faq,
@@ -58,71 +40,95 @@ function FAQItem({
   isOpen,
   onToggle,
 }: {
-  faq: (typeof faqs)[0]
-  index: number
-  isOpen: boolean
-  onToggle: () => void
+  faq: typeof faqs[0];
+  index: number;
+  isOpen: boolean;
+  onToggle: () => void;
 }) {
   return (
-    <div className={cn("group border-b border-border/50 transition-all duration-300", isOpen && "border-accent/30")}>
-      <button onClick={onToggle} className="w-full py-6 flex items-center justify-between text-left">
+    <div
+      className={cn(
+        "border-b border-border/50 transition-all duration-500",
+        isOpen ? "border-accent/50 pb-6" : "pb-0"
+      )}
+    >
+      <button
+        onClick={onToggle}
+        className="w-full py-8 flex items-center justify-between text-left focus:outline-none group"
+      >
         <span
           className={cn(
-            "text-lg font-semibold transition-colors",
-            isOpen ? "text-accent" : "text-foreground group-hover:text-accent",
+            "text-lg md:text-xl font-bold transition-colors duration-300",
+            isOpen
+              ? "text-accent"
+              : "text-foreground group-hover:text-accent/80"
           )}
         >
           {faq.question}
         </span>
-        <ChevronDown
+        <div
           className={cn(
-            "w-5 h-5 text-muted-foreground transition-all duration-300",
-            isOpen && "rotate-180 text-accent",
+            "w-8 h-8 rounded-full border border-border/50 flex items-center justify-center transition-all duration-300",
+            isOpen
+              ? "bg-accent border-accent rotate-180"
+              : "group-hover:border-accent"
           )}
-        />
+        >
+          <ChevronDown
+            className={cn(
+              "w-4 h-4 transition-colors",
+              isOpen
+                ? "text-white"
+                : "text-muted-foreground group-hover:text-accent"
+            )}
+          />
+        </div>
       </button>
-      <div className={cn("overflow-hidden transition-all duration-500", isOpen ? "max-h-40 pb-6" : "max-h-0")}>
-        <p className="text-muted-foreground leading-relaxed pr-8">{faq.answer}</p>
+      <div
+        className={cn(
+          "overflow-hidden transition-all duration-500 ease-in-out",
+          isOpen ? "max-h-48 opacity-100" : "max-h-0 opacity-0"
+        )}
+      >
+        <p className="text-muted-foreground leading-relaxed text-lg pr-12 pb-4">
+          {faq.answer}
+        </p>
       </div>
     </div>
-  )
+  );
 }
 
 export function FAQSection() {
-  const [openIndex, setOpenIndex] = useState<number | null>(0)
+  const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   return (
-    <section id="faq" className="py-32 bg-card border-y border-border/50 relative overflow-hidden">
-      {/* Background */}
-      <div className="absolute inset-0">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] rounded-full bg-accent/3 blur-[200px]" />
-      </div>
-
-      <div className="container mx-auto px-6 relative z-10">
+    <section id="faq" className="py-32 bg-card border-t border-border/50">
+      <div className="container mx-auto px-6 max-w-4xl">
         <RevealOnScroll direction="down">
-          <div className="text-center mb-16">
-            <div className="inline-block px-4 py-2 rounded-full border border-border/50 text-sm text-muted-foreground mb-6 backdrop-blur-sm">
-              FAQs
-            </div>
-            <h2 className="text-4xl md:text-5xl lg:text-6xl font-black tracking-tight">
-              COMMON <AnimatedGradientText>QUESTIONS</AnimatedGradientText>
-            </h2>
-          </div>
+          <h2 className="text-4xl md:text-6xl font-black text-center mb-20 tracking-tighter">
+            <SplitText
+              text="FAQ & OBJECTIONS"
+              animation="fadeUp"
+              stagger={60}
+            />
+          </h2>
         </RevealOnScroll>
 
-        <div className="max-w-3xl mx-auto">
+        <div className="space-y-2">
           {faqs.map((faq, index) => (
-            <RevealOnScroll key={index} delay={index * 50} direction="up">
+            <RevealOnScroll key={index} delay={index * 100} direction="up">
               <FAQItem
                 faq={faq}
                 index={index}
                 isOpen={openIndex === index}
-                onToggle={() => setOpenIndex(openIndex === index ? null : index)}
+                onToggle={() =>
+                  setOpenIndex(openIndex === index ? null : index)
+                }
               />
             </RevealOnScroll>
           ))}
         </div>
       </div>
     </section>
-  )
+  );
 }
