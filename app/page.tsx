@@ -5,7 +5,6 @@ import { WorkShowcaseSection } from "@/components/work-showcase-section";
 import { HowWeWorkSection } from "@/components/how-we-work-section";
 import { FeaturesSection } from "@/components/features-section";
 import { PricingSection } from "@/components/pricing-section";
-import { TestimonialsSection } from "@/components/testimonials-section";
 import { TechStackSection } from "@/components/tech-stack-section";
 import { BonusSection } from "@/components/bonus-section";
 import { FAQSection } from "@/components/faq-section";
@@ -32,7 +31,6 @@ export default function Home() {
       <TechStackSection />
       <PricingSection />
       <BonusSection />
-      {/* <TestimonialsSection /> */}
       <FAQSection />
       <CTASection />
       <Footer />
