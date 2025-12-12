@@ -128,7 +128,7 @@ export function CTASection() {
 
           <div className="mt-20 pt-8 border-t border-border/20">
             <p className="text-xs md:text-sm text-muted-foreground tracking-widest uppercase font-semibold opacity-60">
-              Copyright 2025. Standard Build Agreement. Confidentiality Assured.
+              © 2025 AI App Labs by cgramm.org. All rights reserved.
             </p>
           </div>
         </RevealOnScroll>
