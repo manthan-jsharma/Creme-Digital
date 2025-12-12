@@ -68,17 +68,17 @@ const dashboardScreenshots = [
   {
     src: "/AI-Saas-Dashboard1.png",
     title: "Main Command Center",
-    desc: "Real-time AI metrics & user tracking",
+    desc: "Real-time AI metrics",
   },
   {
     src: "/AI-Saas-Dashboard4.png",
     title: "Analytics Suite",
-    desc: "Deep-dive data visualization",
+    desc: "Deep-dive data",
   },
   {
     src: "/AI-Saas-Dashboard3.png",
     title: "Revenue Engine",
-    desc: "Stripe integration & MRR forecasting",
+    desc: "MRR forecasting",
   },
 ];
 
@@ -89,11 +89,11 @@ function StatCard({ stat, index }: { stat: typeof stats[0]; index: number }) {
   const count = useCounter(stat.value, 2000, 0, isVisible);
 
   return (
-    <div ref={ref}>
-      <TiltCard className="group" maxTilt={8}>
-        <div className="relative px-8 py-8 rounded-2xl bg-gradient-to-br from-card to-background border border-border/50 overflow-hidden transition-all duration-500 hover:border-accent/30 hover:shadow-[0_0_30px_-10px_rgba(249,115,22,0.3)]">
+    <div ref={ref} className="w-full md:w-auto min-w-[200px] flex-1">
+      <TiltCard className="group h-full" maxTilt={8}>
+        <div className="relative h-full px-6 py-8 rounded-2xl bg-gradient-to-br from-card to-background border border-border/50 overflow-hidden transition-all duration-500 hover:border-accent/30 hover:shadow-[0_0_30px_-10px_rgba(249,115,22,0.3)]">
           <div className="absolute inset-0 bg-gradient-to-br from-accent/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-          <div className="relative">
+          <div className="relative text-center md:text-left">
             <div className="text-4xl md:text-5xl font-black mb-2">
               <AnimatedGradientText>
                 {stat.prefix}
@@ -118,8 +118,8 @@ function InfiniteLogoMarquee() {
 
   return (
     <div className="relative overflow-hidden py-8 group">
-      <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-card to-transparent z-10" />
-      <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-card to-transparent z-10" />
+      <div className="absolute left-0 top-0 bottom-0 w-16 md:w-32 bg-gradient-to-r from-card to-transparent z-10" />
+      <div className="absolute right-0 top-0 bottom-0 w-16 md:w-32 bg-gradient-to-l from-card to-transparent z-10" />
 
       <div
         ref={marqueeRef}
@@ -128,9 +128,9 @@ function InfiniteLogoMarquee() {
         {[...logos, ...logos, ...logos].map((logo, index) => (
           <div
             key={index}
-            className="flex-shrink-0 mx-8 px-6 py-3 rounded-full border border-border/30 bg-background/50 backdrop-blur-sm hover:border-accent/50 hover:bg-accent/10 transition-all duration-300 cursor-pointer group/logo"
+            className="flex-shrink-0 mx-4 md:mx-8 px-4 md:px-6 py-3 rounded-full border border-border/30 bg-background/50 backdrop-blur-sm hover:border-accent/50 hover:bg-accent/10 transition-all duration-300 cursor-pointer group/logo"
           >
-            <span className="text-sm font-semibold text-muted-foreground group-hover/logo:text-accent transition-colors whitespace-nowrap uppercase tracking-wider">
+            <span className="text-xs md:text-sm font-semibold text-muted-foreground group-hover/logo:text-accent transition-colors whitespace-nowrap uppercase tracking-wider">
               {logo}
             </span>
           </div>
@@ -155,12 +155,16 @@ function DashboardShowcase() {
 
   return (
     <div className="relative w-full">
-      {/* Floating "White Label" Card - NOW INTERACTIVE */}
-      <div className="absolute -top-12 right-4 md:-right-12 z-20 hidden md:block">
-        <FloatingElement delay={500} amplitude={10} frequency={1.5}>
+      <div className="relative md:absolute md:-top-12 md:-right-12 z-20 w-full md:w-auto mb-6 md:mb-0 flex justify-center md:block">
+        <FloatingElement
+          delay={500}
+          amplitude={10}
+          frequency={1.5}
+          className="w-full max-w-xs"
+        >
           <div
             onClick={() => setIsWhiteLabelOpen(true)}
-            className="bg-card border border-accent/30 p-5 rounded-2xl shadow-2xl max-w-xs backdrop-blur-xl cursor-pointer hover:scale-105 hover:border-accent transition-all duration-300 group"
+            className="bg-card border border-accent/30 p-5 rounded-2xl shadow-2xl w-full backdrop-blur-xl cursor-pointer hover:scale-105 hover:border-accent transition-all duration-300 group"
           >
             <div className="flex items-center justify-between mb-3">
               <div className="flex items-center gap-3">
@@ -175,15 +179,14 @@ function DashboardShowcase() {
             </div>
 
             <p className="text-xs text-muted-foreground leading-relaxed mb-3 group-hover:text-foreground/80 transition-colors">
-              Launch your own agency. We build the tech, you white-label it.{" "}
-              <span className="text-foreground font-bold">
-                Reseller License: $10,000/year.
-              </span>
+              Resell our development under your brand. You charge clients{" "}
+              <span className="text-foreground font-bold">$20k–$100k</span>, and
+              we build it.
             </p>
 
             <div className="flex items-center justify-between text-xs font-bold text-accent pt-2 border-t border-border/30">
               <div className="flex items-center gap-2">
-                <CheckCircle className="w-3 h-3" /> 100% IP Ownership
+                <CheckCircle className="w-3 h-3" /> License: $10k/yr
               </div>
               <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity text-[10px] uppercase tracking-wide">
                 <MousePointerClick className="w-3 h-3" /> Try Demo
@@ -194,17 +197,16 @@ function DashboardShowcase() {
       </div>
 
       <Card3D intensity={15} className="w-full">
-        <div className="rounded-3xl border border-border/50 bg-card/50 backdrop-blur-xl overflow-hidden shadow-2xl relative group/card">
-          {/* Browser Toolbar */}
-          <div className="h-12 border-b border-border/50 flex items-center px-4 gap-2 bg-background/50">
+        <div className="rounded-2xl md:rounded-3xl border border-border/50 bg-card/50 backdrop-blur-xl overflow-hidden shadow-2xl relative group/card">
+          <div className="h-10 md:h-12 border-b border-border/50 flex items-center px-4 gap-2 bg-background/50">
             <div className="flex gap-1.5">
-              <div className="w-3 h-3 rounded-full bg-red-500/50" />
-              <div className="w-3 h-3 rounded-full bg-yellow-500/50" />
-              <div className="w-3 h-3 rounded-full bg-green-500/50" />
+              <div className="w-2.5 h-2.5 md:w-3 md:h-3 rounded-full bg-zinc-600/50" />
+              <div className="w-2.5 h-2.5 md:w-3 md:h-3 rounded-full bg-zinc-600/50" />
+              <div className="w-2.5 h-2.5 md:w-3 md:h-3 rounded-full bg-zinc-600/50" />
             </div>
-            <div className="ml-4 px-3 py-1 rounded-md bg-secondary/50 text-[10px] font-mono text-muted-foreground flex items-center gap-2">
-              <LayoutDashboard className="w-3 h-3" />
-              app.NebulaAI-saas.com/dashboard
+            <div className="ml-2 md:ml-4 px-2 md:px-3 py-1 rounded-md bg-secondary/50 text-[8px] md:text-[10px] font-mono text-muted-foreground flex items-center gap-2 truncate max-w-[150px] md:max-w-none">
+              <LayoutDashboard className="w-3 h-3 hidden md:block" />
+              app.your-saas.com/dashboard
             </div>
           </div>
 
@@ -216,50 +218,40 @@ function DashboardShowcase() {
                     <img
                       src={shot.src}
                       alt={shot.title}
-                      className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover/image:scale-150 group-hover/image:rotate-1"
+                      className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover/image:scale-110 md:group-hover/image:scale-150 group-hover/image:rotate-1"
                       style={{ transformOrigin: "center center" }}
                     />
 
-                    {/* Overlay on non-hover */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-transparent to-transparent opacity-100 group-hover/image:opacity-0 transition-opacity duration-300 flex flex-col justify-end p-8">
-                      <h3 className="text-2xl font-bold text-white mb-1">
+                    <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-transparent to-transparent opacity-100 group-hover/image:opacity-0 transition-opacity duration-300 flex flex-col justify-end p-4 md:p-8">
+                      <h3 className="text-lg md:text-2xl font-bold text-white mb-1">
                         {shot.title}
                       </h3>
-                      <p className="text-sm text-muted-foreground">
+                      <p className="text-xs md:text-sm text-muted-foreground">
                         {shot.desc}
                       </p>
-                    </div>
-
-                    {/* Magnifying Glass Hint */}
-                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-0 group-hover/image:opacity-100 transition-opacity duration-300 pointer-events-none">
-                      <div className="bg-black/50 backdrop-blur-md text-white px-4 py-2 rounded-full text-xs font-bold border border-white/10">
-                        Hover to Inspect
-                      </div>
                     </div>
                   </div>
                 </CarouselItem>
               ))}
             </CarouselContent>
-            <CarouselPrevious className="left-4 bg-background/20 backdrop-blur-md border-white/10 hover:bg-accent hover:text-white" />
-            <CarouselNext className="right-4 bg-background/20 backdrop-blur-md border-white/10 hover:bg-accent hover:text-white" />
+            <CarouselPrevious className="left-2 md:left-4 bg-background/20 backdrop-blur-md border-white/10 hover:bg-accent hover:text-white hidden sm:flex" />
+            <CarouselNext className="right-2 md:right-4 bg-background/20 backdrop-blur-md border-white/10 hover:bg-accent hover:text-white hidden sm:flex" />
           </Carousel>
         </div>
       </Card3D>
 
-      {/* Carousel Indicators */}
-      <div className="flex justify-center gap-2 mt-6">
+      <div className="flex justify-center gap-2 mt-4 md:mt-6">
         {dashboardScreenshots.map((_, i) => (
           <div
             key={i}
             className={cn(
               "h-1 rounded-full transition-all duration-300",
-              current === i + 1 ? "w-8 bg-accent" : "w-2 bg-border"
+              current === i + 1 ? "w-6 md:w-8 bg-accent" : "w-2 bg-border"
             )}
           />
         ))}
       </div>
 
-      {/* Modal Component */}
       <WhiteLabelModal
         isOpen={isWhiteLabelOpen}
         onClose={() => setIsWhiteLabelOpen(false)}
@@ -274,24 +266,26 @@ export function StatsSection() {
   return (
     <section
       ref={ref}
-      className="py-32 bg-card border-y border-border/50 relative overflow-hidden"
+      className="py-20 md:py-32 bg-card border-y border-border/50 relative overflow-hidden"
     >
       <GradientBlob
-        className="top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] opacity-20"
+        className="top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] md:w-[800px] h-[500px] md:h-[800px] opacity-20"
         colors={["rgba(249,115,22,0.1)", "transparent"]}
       />
 
-      <div className="container mx-auto px-6 relative z-10">
+      <div className="container mx-auto px-4 md:px-6 relative z-10">
         <RevealOnScroll delay={100} direction="up">
-          <h2 className="text-4xl md:text-5xl lg:text-7xl font-black text-center mb-6 tracking-tighter leading-[0.9]">
-            <SplitText
-              text="TRUSTED BY"
-              className="inline-block"
-              animation="fadeUp"
-              stagger={30}
-            />
-            <br />
-            <span className="text-accent inline-block">
+          <h2 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-black text-center mb-6 tracking-tighter leading-[0.9]">
+            <span className="block md:inline-block">
+              <SplitText
+                text="TRUSTED BY"
+                className="inline-block"
+                animation="fadeUp"
+                stagger={30}
+              />
+            </span>
+            <br className="hidden md:block" />
+            <span className="text-accent block md:inline-block mt-2 md:mt-0">
               <SplitText
                 text="INDUSTRY LEADERS"
                 animation="elastic"
@@ -303,7 +297,7 @@ export function StatsSection() {
         </RevealOnScroll>
 
         <RevealOnScroll delay={200} direction="up">
-          <p className="text-center text-lg md:text-xl text-muted-foreground mb-20 max-w-2xl mx-auto">
+          <p className="text-center text-base md:text-xl text-muted-foreground mb-16 md:mb-20 max-w-2xl mx-auto px-2">
             We don't just build software. We engineer{" "}
             <span className="text-foreground font-bold">
               market-ready assets
@@ -313,12 +307,13 @@ export function StatsSection() {
         </RevealOnScroll>
 
         {/* Stats cards */}
-        <div className="flex flex-wrap justify-center gap-6 mb-24">
+        <div className="flex flex-wrap justify-center gap-4 md:gap-6 mb-16 md:mb-24">
           {stats.map((stat, index) => (
             <RevealOnScroll
               key={index}
               delay={300 + index * 100}
               direction="up"
+              className="w-full sm:w-auto"
             >
               <StatCard stat={stat} index={index} />
             </RevealOnScroll>
@@ -328,13 +323,19 @@ export function StatsSection() {
         {/* DASHBOARD CAROUSEL + WHITE LABEL PITCH */}
         <div id="white-label" className="scroll-mt-32">
           <RevealOnScroll delay={500} direction="scale">
-            <div className="max-w-5xl mx-auto mb-24">
-              <div className="text-center mb-12">
-                <h3 className="text-2xl md:text-3xl font-black mb-3">
-                  Your Future Command Center
+            <div className="max-w-5xl mx-auto mb-16 md:mb-24">
+              {/* NEW TEXT CONTENT FOR WHITE LABEL RESELLING */}
+              <div className="text-center mb-8 md:mb-12 px-4">
+                <h3 className="text-2xl md:text-4xl font-black mb-4">
+                  Launch Your Own AI Agency Instantly
                 </h3>
-                <p className="text-muted-foreground">
-                  Get your own branded dashboard to manage your empire.
+                <p className="text-sm md:text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+                  We build the tech. You White-Label and brand it as your own,
+                  resell access to your clients.
+                  <span className="block mt-2 text-foreground font-bold">
+                    Reseller License:{" "}
+                    <span className="text-accent">$10,000 / year.</span>
+                  </span>
                 </p>
               </div>
               <DashboardShowcase />
@@ -344,7 +345,7 @@ export function StatsSection() {
 
         {/* Logo marquee */}
         <RevealOnScroll delay={700} direction="fade">
-          <div className="text-center mb-8">
+          <div className="text-center mb-6 md:mb-8">
             <span className="text-xs text-muted-foreground uppercase tracking-[0.2em] font-bold">
               Our Clients & Partners
             </span>

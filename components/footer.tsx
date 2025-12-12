@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { RevealOnScroll } from "@/components/reveal-on-scroll";
 import { MagneticButton } from "@/components/magnetic-button";
+import { LogoIcon } from "@/components/logo-icon";
 import { ArrowUpRight, Mail, Twitter, Linkedin, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
@@ -40,8 +41,6 @@ export function Footer() {
 
     setIsLoading(true);
 
-    // Redirect to Booking URL
-    // Using window.location.href for a full page redirect
     setTimeout(() => {
       window.location.href = "https://cal.com/aiapps.dev/30min";
     }, 500);
@@ -58,15 +57,15 @@ export function Footer() {
         <div className="grid lg:grid-cols-2 gap-16 mb-16">
           {/* Brand section */}
           <RevealOnScroll direction="left">
-            <div>
-              <Link
-                href="/"
-                className="group inline-flex items-center gap-2 mb-6"
-              >
-                <span className="text-3xl font-black text-foreground transition-colors group-hover:text-accent">
-                  Nexus
+            <div className="md:col-span-2">
+              <Link href="/" className="flex items-center gap-2 mb-4">
+                <div className="w-8 h-8 rounded-lg bg-black border border-white/10 flex items-center justify-center">
+                  <LogoIcon className="w-6 h-6" />
+                </div>
+                {/* UPDATED FULL NAME */}
+                <span className="text-lg font-black text-foreground tracking-tight">
+                  AI App Labs by cgramm.org
                 </span>
-                <span className="text-sm text-muted-foreground">AI Assets</span>
               </Link>
 
               <p className="text-muted-foreground mb-8 max-w-md leading-relaxed">
@@ -152,7 +151,7 @@ export function Footer() {
         <RevealOnScroll direction="up">
           <div className="pt-8 border-t border-border/30 flex flex-col md:flex-row justify-between items-center gap-4">
             <p className="text-sm text-muted-foreground">
-              © 2025 NexusAI — All rights reserved
+              © 2025 AI App Labs by cgramm.org. All rights reserved.
             </p>
             <div className="flex gap-6">
               <Link

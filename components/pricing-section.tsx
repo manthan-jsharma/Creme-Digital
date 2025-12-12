@@ -15,74 +15,92 @@ export function PricingSection() {
   return (
     <section
       id="pricing"
-      className="py-32 bg-background relative overflow-hidden"
+      className="py-20 md:py-32 bg-background relative overflow-hidden"
     >
-      <div className="container mx-auto px-6 relative z-10">
+      <div className="container mx-auto px-4 md:px-6 relative z-10">
         <RevealOnScroll direction="down">
-          <div className="text-center mb-24">
-            <h2 className="text-4xl md:text-6xl lg:text-7xl font-black tracking-tighter mb-6">
-              <SplitText
-                text="THE TIERED SELECTION"
-                animation="elastic"
-                stagger={50}
-              />
+          <div className="text-center mb-16 md:mb-24">
+            <h2 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-black tracking-tighter mb-4 md:mb-6 leading-tight">
+              <span className="inline-block">
+                <SplitText text="THE TIERED" animation="elastic" stagger={50} />
+              </span>
+
+              <br className="block md:hidden" />
+
+              <span className="hidden md:inline-block w-3 md:w-4" />
+
+              <span className="inline-block">
+                <SplitText
+                  text="SELECTION"
+                  animation="elastic"
+                  stagger={50}
+                  delay={150}
+                />
+              </span>
             </h2>
-            <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto">
+            <p className="text-base md:text-xl text-muted-foreground max-w-2xl mx-auto px-2">
               Anchor high, deliver higher. Choose the asset class that fits your
               ambition.
             </p>
           </div>
         </RevealOnScroll>
 
-        <div className="grid md:grid-cols-3 gap-8 max-w-7xl mx-auto items-center">
+        {/* ... (Grid logic same as previous, resizing logic handled by Tailwind classes above) */}
+        {/* I'm keeping the grid structure from the previous fix which is already responsive. */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 max-w-7xl mx-auto items-stretch md:items-center">
           {pricingPlans.map((plan, index) => (
             <RevealOnScroll
               key={plan.id}
               delay={index * 150}
               direction="up"
-              className={cn(plan.popular && "md:-mt-8 md:-mb-8 z-10")}
+              className={cn(
+                plan.popular &&
+                  "md:-mt-8 md:-mb-8 z-10 order-first md:order-none"
+              )}
             >
               <TiltCard maxTilt={3}>
                 <div
                   className={cn(
-                    "group relative h-full p-8 md:p-10 rounded-3xl border transition-all duration-500",
+                    "group relative h-full p-6 md:p-10 rounded-3xl border transition-all duration-500",
                     plan.popular
-                      ? "bg-card border-accent/50 shadow-[0_0_50px_-15px_rgba(249,115,22,0.2)] scale-105"
+                      ? "bg-card border-accent/50 shadow-[0_0_50px_-15px_rgba(249,115,22,0.2)] scale-100 md:scale-105"
                       : "bg-card/30 border-border/50 hover:bg-card/50"
                   )}
                 >
                   {plan.popular && (
                     <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2">
-                      <div className="px-6 py-2 rounded-full bg-gradient-to-r from-accent to-orange-500 text-white text-sm font-bold flex items-center gap-2 shadow-lg shadow-accent/20">
-                        <Sparkles className="w-4 h-4 animate-pulse" /> MOST
-                        POPULAR
+                      <div className="px-4 md:px-6 py-1.5 md:py-2 rounded-full bg-gradient-to-r from-accent to-orange-500 text-white text-xs md:text-sm font-bold flex items-center gap-2 shadow-lg shadow-accent/20">
+                        <Sparkles className="w-3 h-3 md:w-4 md:h-4 animate-pulse" />{" "}
+                        MOST POPULAR
                       </div>
                     </div>
                   )}
 
-                  <h3 className="text-2xl font-black mb-2">{plan.name}</h3>
+                  <h3 className="text-xl md:text-2xl font-black mb-1 md:mb-2">
+                    {plan.name}
+                  </h3>
                   <div
                     className={cn(
-                      "text-sm font-bold bg-clip-text text-transparent bg-gradient-to-r w-fit mb-6 uppercase tracking-wider",
+                      "text-xs md:text-sm font-bold bg-clip-text text-transparent bg-gradient-to-r w-fit mb-4 md:mb-6 uppercase tracking-wider",
                       plan.gradient
                     )}
                   >
                     {plan.subtitle}
                   </div>
-                  <p className="text-sm text-muted-foreground mb-8 min-h-[40px]">
+                  <p className="text-sm text-muted-foreground mb-6 md:mb-8 min-h-[40px]">
                     {plan.description}
                   </p>
 
-                  <div className="mb-8 p-4 rounded-xl bg-background/50 border border-border/50">
-                    <span className="text-4xl md:text-5xl font-black tracking-tighter block">
+                  <div className="mb-6 md:mb-8 p-4 rounded-xl bg-background/50 border border-border/50">
+                    <span className="text-3xl md:text-5xl font-black tracking-tighter block">
                       {plan.price}
                     </span>
-                    <span className="text-xs text-muted-foreground uppercase font-bold tracking-wide">
+                    <span className="text-[10px] md:text-xs text-muted-foreground uppercase font-bold tracking-wide">
                       {plan.period}
                     </span>
                   </div>
 
-                  <ul className="space-y-4 mb-10">
+                  <ul className="space-y-3 md:space-y-4 mb-8 md:mb-10">
                     {plan.features.map((feature, i) => (
                       <li
                         key={i}
@@ -90,7 +108,7 @@ export function PricingSection() {
                       >
                         <div
                           className={cn(
-                            "p-1 rounded-full bg-background border border-border/50 group-hover/li:border-accent/50 transition-colors",
+                            "p-1 rounded-full bg-background border border-border/50 group-hover/li:border-accent/50 transition-colors flex-shrink-0",
                             plan.popular && "border-accent/30"
                           )}
                         >
@@ -112,7 +130,7 @@ export function PricingSection() {
                     <Button
                       asChild
                       className={cn(
-                        "w-full rounded-xl py-7 font-bold text-lg shadow-lg hover:shadow-xl transition-all duration-300",
+                        "w-full rounded-xl py-6 md:py-7 font-bold text-base md:text-lg shadow-lg hover:shadow-xl transition-all duration-300",
                         plan.popular
                           ? "bg-gradient-to-r from-accent to-orange-600 text-white hover:scale-[1.02]"
                           : "bg-background border-2 border-border/50 hover:border-accent/50 text-foreground hover:bg-accent/5"
@@ -131,37 +149,6 @@ export function PricingSection() {
             </RevealOnScroll>
           ))}
         </div>
-
-        {/* Bonus Section */}
-        {/* <RevealOnScroll delay={400} direction="up">
-          <div className="mt-24 max-w-4xl mx-auto p-1 rounded-3xl bg-gradient-to-r from-accent/20 via-orange-500/20 to-accent/20">
-            <div className="bg-background rounded-[22px] p-8 md:p-12 text-center">
-              <h3 className="text-3xl font-black mb-6">⚡ Efficiency Reward</h3>
-              <p className="text-lg text-muted-foreground mb-8">
-                Sign up the same day you receive your proposal to unlock:
-              </p>
-              <div className="grid sm:grid-cols-3 gap-6">
-                {[
-                  { title: "$1,000 Discount", desc: "Instant saving" },
-                  { title: "+30 Posts", desc: "Done-for-you content" },
-                  { title: "2 Landing Pages", desc: "For A/B testing" },
-                ].map((bonus, i) => (
-                  <div
-                    key={i}
-                    className="bg-secondary/20 p-6 rounded-2xl border border-border/50 hover:border-accent/30 transition-colors"
-                  >
-                    <div className="text-xl font-bold text-foreground mb-1">
-                      {bonus.title}
-                    </div>
-                    <div className="text-sm text-muted-foreground">
-                      {bonus.desc}
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </RevealOnScroll> */}
       </div>
     </section>
   );

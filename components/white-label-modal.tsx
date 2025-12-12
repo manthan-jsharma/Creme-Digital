@@ -112,13 +112,12 @@ export function WhiteLabelModal({
                   className="bg-secondary/30 border-border/50 focus:border-accent/50"
                 />
                 <p className="text-xs text-muted-foreground mt-2">
-                  This will replace "nebulaai" in the dashboard header and
+                  This will replace "AI App Labs" in the dashboard header and
                   emails.
                 </p>
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                {/* Logo Upload */}
                 <div>
                   <label className="text-sm font-medium text-foreground mb-2 block">
                     Logo
@@ -167,7 +166,6 @@ export function WhiteLabelModal({
                   </div>
                 </div>
 
-                {/* Favicon Upload */}
                 <div>
                   <label className="text-sm font-medium text-foreground mb-2 block">
                     Favicon

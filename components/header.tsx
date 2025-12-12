@@ -4,8 +4,9 @@ import Link from "next/link";
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { MagneticButton } from "@/components/magnetic-button";
-import { Menu, X, LogIn, PaintBucket, Blocks } from "lucide-react"; // Changed to Blocks
+import { Menu, X, LogIn, PaintBucket } from "lucide-react";
 import { WhiteLabelModal } from "@/components/white-label-modal";
+import { LogoIcon } from "@/components/logo-icon";
 import { cn } from "@/lib/utils";
 
 const navItems = [
@@ -68,16 +69,16 @@ export function Header() {
         <div className="container mx-auto px-6">
           <div className="flex items-center justify-between">
             <Link href="/" className="group flex items-center gap-2">
-              {/* NEW LOGO: Blocks Icon */}
-              <div className="relative flex items-center justify-center w-10 h-10 rounded-xl bg-gradient-to-br from-accent to-orange-600 text-white shadow-lg group-hover:scale-110 transition-transform">
-                <Blocks className="w-6 h-6" />
+              <div className="relative flex items-center justify-center w-10 h-10 rounded-xl bg-black border border-white/10 shadow-lg group-hover:scale-110 transition-transform">
+                {" "}
+                <LogoIcon className="w-full h-full" />
               </div>
               <div className="flex flex-col">
-                <span className="text-xl font-black text-foreground tracking-tighter leading-none group-hover:text-accent transition-colors">
-                  NEXUS
+                <span className="text-lg md:text-xl font-black text-foreground tracking-tighter leading-none group-hover:text-accent transition-colors">
+                  AI APP LABS
                 </span>
-                <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-[0.2em] leading-none group-hover:text-foreground transition-colors">
-                  AI ASSETS
+                <span className="text-[8px] md:text-[10px] font-bold text-muted-foreground uppercase tracking-[0.1em] leading-none group-hover:text-foreground transition-colors">
+                  BY CGRAMM.ORG
                 </span>
               </div>
             </Link>
@@ -97,13 +98,6 @@ export function Header() {
                   {item.label}
                 </button>
               ))}
-              <button
-                onClick={() => setIsWhiteLabelOpen(true)}
-                className="relative px-4 py-2 text-sm text-muted-foreground hover:text-accent transition-all duration-300 flex items-center gap-2 font-medium"
-              >
-                <PaintBucket className="w-3 h-3" />
-                White Label
-              </button>
             </nav>
 
             <div className="hidden md:flex items-center gap-4">

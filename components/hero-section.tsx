@@ -21,7 +21,7 @@ export function HeroSection() {
       if (!heroRef.current) return;
       const rect = heroRef.current.getBoundingClientRect();
       setMousePosition({
-        x: ((e.clientX - rect.left) / rect.width - 0.5) * 40, // Increased sensitivity
+        x: ((e.clientX - rect.left) / rect.width - 0.5) * 40,
         y: ((e.clientY - rect.top) / rect.height - 0.5) * 40,
       });
     };
@@ -39,7 +39,6 @@ export function HeroSection() {
       ref={heroRef}
       className="relative min-h-screen flex items-center justify-center pt-32 pb-20 overflow-hidden"
     >
-      {/* Dynamic Background */}
       <GradientBlob
         className="top-20 left-[5%] w-[800px] h-[800px] opacity-40 animate-pulse"
         colors={["rgba(249,115,22,0.15)", "transparent", "transparent"]}
@@ -55,8 +54,6 @@ export function HeroSection() {
         className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:60px_60px]"
         style={{ transform: `translateY(${scrollY * 0.2}px)` }}
       />
-
-      {/* Parallax Floating Shapes - "Alive" feel */}
       <ParallaxLayer
         speed={-0.15}
         className="absolute inset-0 pointer-events-none"
@@ -80,7 +77,6 @@ export function HeroSection() {
       </ParallaxLayer>
 
       <div className="container mx-auto px-6 relative z-10 text-center">
-        {/* Floating Badge */}
         <RevealOnScroll delay={0} direction="down">
           <FloatingElement
             amplitude={6}
@@ -90,7 +86,7 @@ export function HeroSection() {
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-accent/40 bg-accent/5 backdrop-blur-md shadow-[0_0_20px_-5px_rgba(249,115,22,0.3)] hover:shadow-[0_0_30px_-5px_rgba(249,115,22,0.5)] transition-shadow duration-500 cursor-default">
               <Sparkles className="w-4 h-4 text-accent animate-pulse" />
               <span className="text-xs md:text-sm font-bold text-accent tracking-wide uppercase">
-                Now accepting clients for October cohort
+                Now accepting clients for December cohort
               </span>
             </div>
           </FloatingElement>
@@ -99,15 +95,18 @@ export function HeroSection() {
         {/* Headlines with Elastic Jump Effect */}
         <div className="mb-8">
           <RevealOnScroll delay={100} direction="up">
-            <h1 className="text-5xl md:text-7xl lg:text-8xl font-black tracking-tighter mb-4 leading-[0.9]">
-              <SplitText
-                text="We don’t just"
-                className="inline-block"
-                animation="fadeUp"
-                stagger={30}
-              />
-              <br className="hidden md:block" />
-              <span className="text-muted-foreground">
+            <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-black tracking-tighter mb-4 leading-[1.1] md:leading-[0.9]">
+              <span className="inline-block whitespace-nowrap">
+                <SplitText
+                  text="We don’t just"
+                  className="inline-block"
+                  animation="fadeUp"
+                  stagger={30}
+                />
+              </span>
+              <br />
+
+              <span className="text-muted-foreground inline-block whitespace-nowrap">
                 <SplitText
                   text="ship code."
                   className="inline-block"
@@ -120,18 +119,27 @@ export function HeroSection() {
           </RevealOnScroll>
 
           <RevealOnScroll delay={300} direction="up">
-            <h2 className="text-4xl md:text-6xl lg:text-7xl font-black tracking-tighter leading-[0.9]">
+            <h2 className="text-2xl sm:text-3xl md:text-6xl lg:text-7xl font-black tracking-tighter leading-[1.2] md:leading-[0.9] mt-4 md:mt-0">
               We build{" "}
               <span className="text-accent inline-block transition-transform hover:scale-105 duration-300">
                 $3M+ AI SaaS Assets
               </span>
+              <br className="block md:hidden" />
               <br className="hidden md:block" />
-              in{" "}
-              <MorphingText
-                texts={["14 Days.", "336 Hours.", "Record Time."]}
-                className="text-foreground underline decoration-accent/50 underline-offset-8"
-                interval={3000}
-              />
+              <span className="inline-block mt-2 md:mt-0">
+                in{" "}
+                <MorphingText
+                  texts={[
+                    "14 Days.",
+                    "336 Hours.",
+                    "Record Time.",
+                    "Savage Speed.",
+                    "Zero Bloat.",
+                  ]}
+                  className="text-foreground underline decoration-accent/50 underline-offset-4 md:underline-offset-8"
+                  interval={1500}
+                />
+              </span>
             </h2>
           </RevealOnScroll>
         </div>

@@ -16,12 +16,10 @@ export function CTASection() {
       id="testimonials"
       className="py-32 bg-background relative overflow-hidden text-center"
     >
-      {/* Background Grid */}
       <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:40px_40px]" />
       <div className="absolute inset-0 bg-gradient-to-b from-background via-transparent to-background" />
 
       <div className="container mx-auto px-6 relative z-10">
-        {/* SECTION: EXAMPLES WE CAN CREATE */}
         <RevealOnScroll direction="down">
           <div className="mb-24 max-w-5xl mx-auto">
             <p className="text-sm font-bold text-muted-foreground uppercase tracking-widest mb-8">

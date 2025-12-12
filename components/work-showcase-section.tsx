@@ -8,9 +8,8 @@ import { MagneticButton } from "@/components/magnetic-button";
 import { Card3D } from "@/components/3d-card";
 import { SplitText } from "@/components/split-text";
 import { cn } from "@/lib/utils";
-import { projects, clientProofs } from "@/lib/data"; // Imported clientProofs
+import { projects, clientProofs } from "@/lib/data";
 
-// Custom Video Component
 function InteractiveVideo() {
   const [isPlaying, setIsPlaying] = useState(false);
 
@@ -30,7 +29,6 @@ function InteractiveVideo() {
 
           <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.05)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.05)_1px,transparent_1px)] bg-[size:40px_40px]" />
 
-          {/* Financial Value Badge */}
           <div className="absolute top-6 right-6 z-20">
             <div className="px-4 py-2 rounded-full bg-zinc-50/2 backdrop-blur-md border border-zinc-200 text-orange-400 text-xs font-bold uppercase tracking-wider flex items-center gap-2 shadow-lg">
               <div className="w-2 h-2 rounded-full bg-zinc-100 animate-pulse" />
@@ -189,12 +187,34 @@ export function WorkShowcaseSection() {
             <div className="inline-block px-4 py-2 rounded-full border border-border/50 text-sm text-muted-foreground mb-6 backdrop-blur-sm bg-card/50">
               PROOF OF COMPETENCE
             </div>
-            {/* UPDATED HEADLINE to Match "Financial Value" Strategy */}
-            <h2 className="text-4xl md:text-6xl lg:text-7xl font-black tracking-tighter mb-8 leading-tight">
-              <SplitText text="Watch us build, ship," className="block" />
-              <span className="text-accent">
+
+            <h2 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-black tracking-tighter mb-4 md:mb-8 leading-tight md:leading-[0.95] max-w-5xl mx-auto">
+              <span className="inline-block">
                 <SplitText
-                  text="and acquire users in real-time."
+                  text="Watch us build, ship"
+                  animation="fadeUp"
+                  stagger={30}
+                />
+              </span>
+
+              <br />
+
+              <span className="inline-block">
+                <SplitText
+                  text="and acquire users"
+                  animation="fadeUp"
+                  stagger={30}
+                  delay={150}
+                />
+              </span>
+
+              <br className="block md:hidden" />
+
+              <span className="hidden md:inline-block w-2" />
+
+              <span className="text-accent inline-block">
+                <SplitText
+                  text="in real-time."
                   animation="elastic"
                   delay={300}
                 />

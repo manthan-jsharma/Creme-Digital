@@ -1,5 +1,4 @@
 "use client";
-
 import Link from "next/link";
 import { Clock, CheckCircle, ArrowRight, Zap } from "lucide-react";
 import { RevealOnScroll } from "@/components/reveal-on-scroll";

@@ -62,21 +62,35 @@ export function TechStackSection() {
                   Anti-Lock-in Guarantee
                 </span>
               </div>
+              <h2 className="text-3xl md:text-5xl lg:text-6xl font-black mb-6 leading-tight">
+                <span className="inline-block">
+                  <SplitText
+                    text="Own"
+                    className="inline-block"
+                    animation="fadeUp"
+                    stagger={30}
+                  />
+                </span>
 
-              <h2 className="text-4xl md:text-6xl font-black mb-6 leading-tight">
-                <SplitText
-                  text="Own Everything."
-                  className="block"
-                  animation="fadeUp"
-                  stagger={30}
-                />
+                <br className="block sm:hidden" />
+                <span className="hidden sm:inline-block">&nbsp;</span>
+
+                <span className="inline-block">
+                  <SplitText
+                    text="Everything."
+                    className="inline-block"
+                    animation="fadeUp"
+                    stagger={30}
+                    delay={100}
+                  />
+                </span>
+
                 <div className="mt-2">
-                  <AnimatedGradientText className="text-3xl md:text-5xl from-orange-900 to-zinc-900">
+                  <AnimatedGradientText className="text-2xl md:text-5xl from-orange-400 to-orange-600">
                     100% IP Transfer.
                   </AnimatedGradientText>
                 </div>
               </h2>
-
               <p className="text-xl text-muted-foreground mb-12 leading-relaxed max-w-xl">
                 We don't rent you a team. We build your intellectual property.
                 No monthly retainer for code access. It's yours.
