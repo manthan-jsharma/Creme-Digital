@@ -45,8 +45,6 @@ export function PricingSection() {
           </div>
         </RevealOnScroll>
 
-        {/* ... (Grid logic same as previous, resizing logic handled by Tailwind classes above) */}
-        {/* I'm keeping the grid structure from the previous fix which is already responsive. */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 max-w-7xl mx-auto items-stretch md:items-center">
           {pricingPlans.map((plan, index) => (
             <RevealOnScroll

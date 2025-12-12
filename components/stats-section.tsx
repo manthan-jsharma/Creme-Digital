@@ -84,12 +84,30 @@ const dashboardScreenshots = [
 
 function StatCard({ stat, index }: { stat: typeof stats[0]; index: number }) {
   const { ref, isVisible } = useScrollAnimation<HTMLDivElement>({
-    threshold: 0.3,
+    threshold: 0.1,
   });
-  const count = useCounter(stat.value, 2000, 0, isVisible);
+  const [hasPlayed, setHasPlayed] = useState(false);
+
+  useEffect(() => {
+    if (isVisible && !hasPlayed) {
+      setHasPlayed(true);
+    }
+  }, [isVisible, hasPlayed]);
+
+  const count = useCounter(stat.value, 2000, 0, hasPlayed);
 
   return (
-    <div ref={ref} className="w-full md:w-auto min-w-[200px] flex-1">
+    <div
+      ref={ref}
+      // FIX: Removed 'flex-1'.
+      // Added 'sm:w-auto' to prevent stretching.
+      // 'min-w-[240px]' ensures they are uniform in size but centered.
+      className={cn(
+        "w-full sm:w-auto min-w-[240px] transition-all duration-1000 ease-out transform",
+        hasPlayed ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"
+      )}
+      style={{ transitionDelay: `${index * 100}ms` }}
+    >
       <TiltCard className="group h-full" maxTilt={8}>
         <div className="relative h-full px-6 py-8 rounded-2xl bg-gradient-to-br from-card to-background border border-border/50 overflow-hidden transition-all duration-500 hover:border-accent/30 hover:shadow-[0_0_30px_-10px_rgba(249,115,22,0.3)]">
           <div className="absolute inset-0 bg-gradient-to-br from-accent/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
@@ -309,22 +327,13 @@ export function StatsSection() {
         {/* Stats cards */}
         <div className="flex flex-wrap justify-center gap-4 md:gap-6 mb-16 md:mb-24">
           {stats.map((stat, index) => (
-            <RevealOnScroll
-              key={index}
-              delay={300 + index * 100}
-              direction="up"
-              className="w-full sm:w-auto"
-            >
-              <StatCard stat={stat} index={index} />
-            </RevealOnScroll>
+            <StatCard key={index} stat={stat} index={index} />
           ))}
         </div>
 
-        {/* DASHBOARD CAROUSEL + WHITE LABEL PITCH */}
         <div id="white-label" className="scroll-mt-32">
           <RevealOnScroll delay={500} direction="scale">
             <div className="max-w-5xl mx-auto mb-16 md:mb-24">
-              {/* NEW TEXT CONTENT FOR WHITE LABEL RESELLING */}
               <div className="text-center mb-8 md:mb-12 px-4">
                 <h3 className="text-2xl md:text-4xl font-black mb-4">
                   Launch Your Own AI Agency Instantly

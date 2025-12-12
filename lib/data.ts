@@ -115,7 +115,7 @@ export const pricingPlans = [
       "14 Days Post-Launch Support",
     ],
     cta: "Build MVP",
-    gradient: "from-zinc-700 to-zinc-500",
+    gradient: "from-accent to-orange-500",
     popular: false,
   },
   {
@@ -156,7 +156,7 @@ export const pricingPlans = [
       "Exit Planning Roadmap",
     ],
     cta: "Build Enterprise",
-    gradient: "from-zinc-900 to-orange-900",
+    gradient: "from-accent to-orange-500",
     popular: false,
   },
 ];
