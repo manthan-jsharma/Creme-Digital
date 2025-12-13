@@ -82,11 +82,56 @@ const dashboardScreenshots = [
   },
 ];
 
+const StatContent = ({
+  stat,
+  count,
+  hasPlayed,
+}: {
+  stat: typeof stats[0];
+  count: number;
+  hasPlayed: boolean;
+}) => (
+  <div
+    className={cn(
+      "relative h-full px-6 py-8 rounded-2xl bg-gradient-to-br from-card to-background border border-border/50 overflow-hidden transform-gpu will-change-[transform,opacity] [backface-visibility:hidden]",
+
+      "md:hover:border-accent/30 md:hover:shadow-[0_0_30px_-10px_rgba(249,115,22,0.3)]",
+
+      hasPlayed ? "opacity-100" : "opacity-0"
+    )}
+    style={{
+      transform: hasPlayed ? "none" : "translateY(32px)",
+      transition: "opacity 0.7s ease-out, transform 0.7s ease-out",
+    }}
+  >
+    <div className="absolute inset-0 bg-gradient-to-br from-accent/5 to-transparent opacity-0 md:group-hover:opacity-100 transition-opacity duration-500" />
+
+    <div className="relative text-center md:text-left">
+      <div className="text-4xl md:text-5xl font-black mb-2">
+        <AnimatedGradientText>
+          {stat.prefix}
+          {count}
+          {stat.suffix}
+        </AnimatedGradientText>
+      </div>
+
+      <div className="text-base font-semibold text-foreground mb-1">
+        {stat.label}
+      </div>
+      <div className="text-sm text-muted-foreground">{stat.subtext}</div>
+    </div>
+
+    <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-bl from-accent/10 to-transparent rounded-bl-3xl" />
+  </div>
+);
+
 function StatCard({ stat, index }: { stat: typeof stats[0]; index: number }) {
   const { ref, isVisible } = useScrollAnimation<HTMLDivElement>({
-    threshold: 0.1,
+    threshold: 0.2,
   });
+
   const [hasPlayed, setHasPlayed] = useState(false);
+  const [isDesktop, setIsDesktop] = useState(false);
 
   useEffect(() => {
     if (isVisible && !hasPlayed) {
@@ -94,39 +139,30 @@ function StatCard({ stat, index }: { stat: typeof stats[0]; index: number }) {
     }
   }, [isVisible, hasPlayed]);
 
+  useEffect(() => {
+    const checkDesktop = () => setIsDesktop(window.innerWidth >= 768);
+    checkDesktop();
+    window.addEventListener("resize", checkDesktop);
+    return () => window.removeEventListener("resize", checkDesktop);
+  }, []);
+
   const count = useCounter(stat.value, 2000, 0, hasPlayed);
 
   return (
-    <div ref={ref} className="w-full sm:w-auto min-w-[240px]">
-      <div
-        className={cn(
-          "transition-all duration-1000 ease-out transform h-full",
-          hasPlayed ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"
-        )}
-        style={{ transitionDelay: `${index * 100}ms` }}
-      >
+    <div
+      ref={ref}
+      className="w-full sm:w-auto min-w-[240px]"
+      style={{ transitionDelay: `${index * 100}ms` }}
+    >
+      {isDesktop ? (
         <TiltCard className="group h-full" maxTilt={8}>
-          <div className="relative h-full px-6 py-8 rounded-2xl bg-gradient-to-br from-card to-background border border-border/50 overflow-hidden transition-all duration-500 hover:border-accent/30 hover:shadow-[0_0_30px_-10px_rgba(249,115,22,0.3)]">
-            <div className="absolute inset-0 bg-gradient-to-br from-accent/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-            <div className="relative text-center md:text-left">
-              <div className="text-4xl md:text-5xl font-black mb-2">
-                <AnimatedGradientText>
-                  {stat.prefix}
-                  {count}
-                  {stat.suffix}
-                </AnimatedGradientText>
-              </div>
-              <div className="text-base font-semibold text-foreground mb-1">
-                {stat.label}
-              </div>
-              <div className="text-sm text-muted-foreground">
-                {stat.subtext}
-              </div>
-            </div>
-            <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-bl from-accent/10 to-transparent rounded-bl-3xl" />
-          </div>
+          <StatContent stat={stat} count={count} hasPlayed={hasPlayed} />
         </TiltCard>
-      </div>
+      ) : (
+        <div className="group h-full">
+          <StatContent stat={stat} count={count} hasPlayed={hasPlayed} />
+        </div>
+      )}
     </div>
   );
 }
@@ -162,6 +198,14 @@ function DashboardShowcase() {
   const [api, setApi] = useState<CarouselApi>();
   const [current, setCurrent] = useState(0);
   const [isWhiteLabelOpen, setIsWhiteLabelOpen] = useState(false);
+  const [isDesktop, setIsDesktop] = useState(false);
+
+  useEffect(() => {
+    const checkDesktop = () => setIsDesktop(window.innerWidth >= 768);
+    checkDesktop();
+    window.addEventListener("resize", checkDesktop);
+    return () => window.removeEventListener("resize", checkDesktop);
+  }, []);
 
   useEffect(() => {
     if (!api) return;
@@ -170,6 +214,49 @@ function DashboardShowcase() {
       setCurrent(api.selectedScrollSnap() + 1);
     });
   }, [api]);
+
+  const BrowserContent = (
+    <div className="relative w-full rounded-2xl md:rounded-3xl border border-white/10 bg-card/50 backdrop-blur-xl overflow-hidden shadow-[0_0_50px_-12px_rgba(0,0,0,0.5)]">
+      <div className="h-10 md:h-12 border-b border-white/10 flex items-center px-4 gap-2 bg-black/20">
+        <div className="flex gap-1.5">
+          <div className="w-2.5 h-2.5 md:w-3 md:h-3 rounded-full bg-red-500/20 border border-red-500/50" />
+          <div className="w-2.5 h-2.5 md:w-3 md:h-3 rounded-full bg-yellow-500/20 border border-yellow-500/50" />
+          <div className="w-2.5 h-2.5 md:w-3 md:h-3 rounded-full bg-green-500/20 border border-green-500/50" />
+        </div>
+        <div className="ml-2 md:ml-4 px-3 py-1 rounded-md bg-white/5 border border-white/5 text-[8px] md:text-[10px] font-mono text-muted-foreground flex items-center gap-2 truncate max-w-[150px] md:max-w-none">
+          <LayoutDashboard className="w-3 h-3 hidden md:block opacity-50" />
+          <span className="opacity-50">app.your-saas.com/dashboard</span>
+        </div>
+      </div>
+
+      {/* Carousel */}
+      <Carousel setApi={setApi} className="w-full bg-black/40">
+        <CarouselContent>
+          {dashboardScreenshots.map((shot, index) => (
+            <CarouselItem key={index}>
+              <div className="relative aspect-[16/10] overflow-hidden group/image">
+                <img
+                  src={shot.src}
+                  alt={shot.title}
+                  className="w-full h-full object-cover transform-gpu transition-transform duration-700 ease-out md:group-hover/image:scale-105"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-100 md:group-hover/image:opacity-0 transition-opacity duration-300 flex flex-col justify-end p-4 md:p-8">
+                  <h3 className="text-lg md:text-2xl font-bold text-white mb-1">
+                    {shot.title}
+                  </h3>
+                  <p className="text-xs md:text-sm text-gray-300">
+                    {shot.desc}
+                  </p>
+                </div>
+              </div>
+            </CarouselItem>
+          ))}
+        </CarouselContent>
+        <CarouselPrevious className="left-4 bg-black/50 border-white/10 hover:bg-accent hover:text-white hidden sm:flex backdrop-blur-md" />
+        <CarouselNext className="right-4 bg-black/50 border-white/10 hover:bg-accent hover:text-white hidden sm:flex backdrop-blur-md" />
+      </Carousel>
+    </div>
+  );
 
   return (
     <div className="relative w-full">
@@ -214,57 +301,20 @@ function DashboardShowcase() {
         </FloatingElement>
       </div>
 
-      <Card3D intensity={15} className="w-full">
-        <div className="rounded-2xl md:rounded-3xl border border-border/50 bg-card/50 backdrop-blur-xl overflow-hidden shadow-2xl relative group/card">
-          <div className="h-10 md:h-12 border-b border-border/50 flex items-center px-4 gap-2 bg-background/50">
-            <div className="flex gap-1.5">
-              <div className="w-2.5 h-2.5 md:w-3 md:h-3 rounded-full bg-zinc-600/50" />
-              <div className="w-2.5 h-2.5 md:w-3 md:h-3 rounded-full bg-zinc-600/50" />
-              <div className="w-2.5 h-2.5 md:w-3 md:h-3 rounded-full bg-zinc-600/50" />
-            </div>
-            <div className="ml-2 md:ml-4 px-2 md:px-3 py-1 rounded-md bg-secondary/50 text-[8px] md:text-[10px] font-mono text-muted-foreground flex items-center gap-2 truncate max-w-[150px] md:max-w-none">
-              <LayoutDashboard className="w-3 h-3 hidden md:block" />
-              app.your-saas.com/dashboard
-            </div>
-          </div>
-
-          <Carousel setApi={setApi} className="w-full">
-            <CarouselContent>
-              {dashboardScreenshots.map((shot, index) => (
-                <CarouselItem key={index}>
-                  <div className="relative aspect-[16/10] overflow-hidden group/image cursor-crosshair">
-                    <img
-                      src={shot.src}
-                      alt={shot.title}
-                      className="w-full h-full object-cover transition-transform duration-700 ease-out md:group-hover/image:scale-110 md:group-hover/image:rotate-1"
-                      style={{ transformOrigin: "center center" }}
-                    />
-
-                    <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-transparent to-transparent opacity-100 md:group-hover/image:opacity-0 transition-opacity duration-300 flex flex-col justify-end p-4 md:p-8">
-                      <h3 className="text-lg md:text-2xl font-bold text-white mb-1">
-                        {shot.title}
-                      </h3>
-                      <p className="text-xs md:text-sm text-muted-foreground">
-                        {shot.desc}
-                      </p>
-                    </div>
-                  </div>
-                </CarouselItem>
-              ))}
-            </CarouselContent>
-            <CarouselPrevious className="left-2 md:left-4 bg-background/20 backdrop-blur-md border-white/10 hover:bg-accent hover:text-white hidden sm:flex" />
-            <CarouselNext className="right-2 md:right-4 bg-background/20 backdrop-blur-md border-white/10 hover:bg-accent hover:text-white hidden sm:flex" />
-          </Carousel>
-        </div>
-      </Card3D>
-
+      {isDesktop ? (
+        <Card3D intensity={15} className="w-full py-5">
+          {BrowserContent}
+        </Card3D>
+      ) : (
+        <div className="w-full">{BrowserContent}</div>
+      )}
       <div className="flex justify-center gap-2 mt-4 md:mt-6">
         {dashboardScreenshots.map((_, i) => (
           <div
             key={i}
             className={cn(
               "h-1 rounded-full transition-all duration-300",
-              current === i + 1 ? "w-6 md:w-8 bg-accent" : "w-2 bg-border"
+              current === i + 1 ? "w-6 md:w-8 bg-accent" : "w-2 bg-white/20"
             )}
           />
         ))}
