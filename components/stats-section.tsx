@@ -97,36 +97,36 @@ function StatCard({ stat, index }: { stat: typeof stats[0]; index: number }) {
   const count = useCounter(stat.value, 2000, 0, hasPlayed);
 
   return (
-    <div
-      ref={ref}
-      // FIX: Removed 'flex-1'.
-      // Added 'sm:w-auto' to prevent stretching.
-      // 'min-w-[240px]' ensures they are uniform in size but centered.
-      className={cn(
-        "w-full sm:w-auto min-w-[240px] transition-all duration-1000 ease-out transform",
-        hasPlayed ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"
-      )}
-      style={{ transitionDelay: `${index * 100}ms` }}
-    >
-      <TiltCard className="group h-full" maxTilt={8}>
-        <div className="relative h-full px-6 py-8 rounded-2xl bg-gradient-to-br from-card to-background border border-border/50 overflow-hidden transition-all duration-500 hover:border-accent/30 hover:shadow-[0_0_30px_-10px_rgba(249,115,22,0.3)]">
-          <div className="absolute inset-0 bg-gradient-to-br from-accent/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-          <div className="relative text-center md:text-left">
-            <div className="text-4xl md:text-5xl font-black mb-2">
-              <AnimatedGradientText>
-                {stat.prefix}
-                {count}
-                {stat.suffix}
-              </AnimatedGradientText>
+    <div ref={ref} className="w-full sm:w-auto min-w-[240px]">
+      <div
+        className={cn(
+          "transition-all duration-1000 ease-out transform h-full",
+          hasPlayed ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"
+        )}
+        style={{ transitionDelay: `${index * 100}ms` }}
+      >
+        <TiltCard className="group h-full" maxTilt={8}>
+          <div className="relative h-full px-6 py-8 rounded-2xl bg-gradient-to-br from-card to-background border border-border/50 overflow-hidden transition-all duration-500 hover:border-accent/30 hover:shadow-[0_0_30px_-10px_rgba(249,115,22,0.3)]">
+            <div className="absolute inset-0 bg-gradient-to-br from-accent/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+            <div className="relative text-center md:text-left">
+              <div className="text-4xl md:text-5xl font-black mb-2">
+                <AnimatedGradientText>
+                  {stat.prefix}
+                  {count}
+                  {stat.suffix}
+                </AnimatedGradientText>
+              </div>
+              <div className="text-base font-semibold text-foreground mb-1">
+                {stat.label}
+              </div>
+              <div className="text-sm text-muted-foreground">
+                {stat.subtext}
+              </div>
             </div>
-            <div className="text-base font-semibold text-foreground mb-1">
-              {stat.label}
-            </div>
-            <div className="text-sm text-muted-foreground">{stat.subtext}</div>
+            <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-bl from-accent/10 to-transparent rounded-bl-3xl" />
           </div>
-          <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-bl from-accent/10 to-transparent rounded-bl-3xl" />
-        </div>
-      </TiltCard>
+        </TiltCard>
+      </div>
     </div>
   );
 }
@@ -236,11 +236,11 @@ function DashboardShowcase() {
                     <img
                       src={shot.src}
                       alt={shot.title}
-                      className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover/image:scale-110 md:group-hover/image:scale-150 group-hover/image:rotate-1"
+                      className="w-full h-full object-cover transition-transform duration-700 ease-out md:group-hover/image:scale-110 md:group-hover/image:rotate-1"
                       style={{ transformOrigin: "center center" }}
                     />
 
-                    <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-transparent to-transparent opacity-100 group-hover/image:opacity-0 transition-opacity duration-300 flex flex-col justify-end p-4 md:p-8">
+                    <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-transparent to-transparent opacity-100 md:group-hover/image:opacity-0 transition-opacity duration-300 flex flex-col justify-end p-4 md:p-8">
                       <h3 className="text-lg md:text-2xl font-bold text-white mb-1">
                         {shot.title}
                       </h3>
